@@ -1,6 +1,7 @@
 import React from 'react';
 import logo from './logo.svg';
 import './App.css';
+import data from './data';
 
 function App() {
   const openMenu = () => {
@@ -41,72 +42,20 @@ function App() {
               <main className="main">
                   <div className="content">
                       <ul className="products">
+                        {
+                          data.products.map(product => 
                           <li>
-                              <div className="product">
-                                <img className="product-image" src ="images/a1.jpg" alt ="product"/> 
-                                    <div className="product-name">
-                                        <a href="product.html">Powercore+ 45w PD</a>
-                                    </div>
-                                    <div className="product-brand">Anker</div>
-                                    <div className="product-price">$129.99</div>
-                                    <div className="product-rating">4.5 stars (10 Reviews)</div>
-                              </div>
-                          </li>
-                          <li>
-                              <div className="product">
-                                <img className="product-image" src ="images/a1.jpg" alt ="product"/> 
-                                    <div className="product-name">
-                                        <a href="product.html">Powercore+ 45w PD</a>
-                                    </div>
-                                    <div className="product-brand">Anker</div>
-                                    <div className="product-price">$129.99</div>
-                                    <div className="product-rating">4.5 stars (10 Reviews)</div>
-                              </div>
-                          </li>
-                          <li>
-                              <div className="product">
-                                <img className="product-image" src ="images/a1.jpg" alt ="product"/> 
-                                    <div className="product-name">
-                                        <a href="product.html">Powercore+ 45w PD</a>
-                                    </div>
-                                    <div className="product-brand">Anker</div>
-                                    <div className="product-price">$129.99</div>
-                                    <div className="product-rating">4.5 stars (10 Reviews)</div>
-                              </div>
-                          </li>
-                          <li>
-                              <div className="product">
-                                <img className="product-image" src ="images/a1.jpg" alt ="product"/> 
-                                    <div className="product-name">
-                                        <a href="product.html">Powercore+ 45w PD</a>
-                                    </div>
-                                    <div className="product-brand">Anker</div>
-                                    <div className="product-price">$129.99</div>
-                                    <div className="product-rating">4.5 stars (10 Reviews)</div>
-                              </div>
-                          </li>
-                          <li>
-                              <div className="product">
-                                <img className="product-image" src ="images/a1.jpg" alt ="product"/> 
-                                    <div className="product-name">
-                                        <a href="product.html">Powercore+ 45w PD</a>
-                                    </div>
-                                    <div className="product-brand">Anker</div>
-                                    <div className="product-price">$129.99</div>
-                                    <div className="product-rating">4.5 stars (10 Reviews)</div>
-                              </div>
-                          </li>
-                          <li>
-                              <div className="product">
-                                <img className="product-image" src ="images/a1.jpg" alt ="product"/> 
-                                    <div className="product-name">
-                                        <a href="product.html">Powercore+ 45w PD</a>
-                                    </div>
-                                    <div className="product-brand">Anker</div>
-                                    <div className="product-price">$129.99</div>
-                                    <div className="product-rating">4.5 stars (10 Reviews)</div>
-                              </div>
-                          </li>
+                            <div className="product">
+                              <img className="product-image" src ={product.image} alt ="product"/> 
+                                  <div className="product-name">
+                                      <a href="product.html">{product.name}</a>
+                                  </div>
+                                  <div className="product-brand">{product.brand}</div>
+                                  <div className="product-price">{product.price}</div>
+                          <div className="product-rating">{product.rating} Stars ({product.numReview })</div>
+                            </div>
+                          </li>)
+                        }
                         </ul>
                     </div>
                 </main>
