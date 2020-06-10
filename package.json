@@ -1,0 +1,29 @@
+{
+  "name": "amazon-react",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+   "start": "nodemon --watch backend --exec babel-node backend/server.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Austin25309w/amazon_react.git"
+  },
+  "author": "austin",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Austin25309w/amazon_react/issues"
+  },
+  "homepage": "https://github.com/Austin25309w/amazon_react#readme",
+  "dependencies": {
+    "express": "^4.17.1"
+  },
+  "devDependencies": {
+    "@babel/cli": "^7.10.1",
+    "@babel/core": "^7.10.2",
+    "@babel/node": "^7.10.1",
+    "@babel/preset-env": "^7.10.2",
+    "nodemon": "^2.0.4"
+  }
+}
