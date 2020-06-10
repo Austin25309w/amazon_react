@@ -1,16 +1,27 @@
-import React from 'react';
-import { Link } from 'react-router-dom'
-import data from '../data'
+import React, { useState, useEffect } from 'react';
+import { Link } from 'react-router-dom';
+import axios from 'axios';
 
 
 const HomeScreen = (props) =>{
-    return (
-    <div>
-    
-    <ul className="products">
+    //define react hook
+    const [products, setProduct] = useState([])
+    useEffect(() =>{
+        //fectch data from server, data containst real data.
+        const fetchData = async ()=> {
+            const {data} = await axios.get("/api/products");
+            setProduct(data);
+        }
+        fetchData();
+        return () => {
+            // 
+        };
+    },[])
+
+    return <ul className="products">
                         {
-                          data.products.map(product => 
-                          <li>
+                          products.map(product => 
+                          <li key ={product._id}>
                             <div className="product">
                                
                                   <div className="product-name">
@@ -22,9 +33,6 @@ const HomeScreen = (props) =>{
                             </div>
                           </li>)
                         }
-                        </ul>
-                        </div>)
-                        
-}
+                        </ul>}
 
 export default HomeScreen;
