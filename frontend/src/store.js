@@ -1,6 +1,6 @@
 import { createStore, combineReducers, applyMiddleware, compose } from 'redux';
 import thunk from 'redux-thunk'
-import { productListReducer } from './reducers/productReducers';
+import { productListReducer, productDetailsReducer } from './reducers/productReducers';
 
 //store accepts 3 parameters 
 
@@ -10,6 +10,7 @@ const reducer = combineReducers({
     // return a new state based on that action
     //
     productList: productListReducer,
+    productDetails: productDetailsReducer
 })
 const composeEnhancer = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
 //compose applyMiddleware is for async action
