@@ -9,7 +9,7 @@ export default {
             brand: 'Anker',
             rating: 4.5,
             numReview: 10, 
-            countInStock: 5
+            countInStock: 0
         },
         {
             _id: '2',
