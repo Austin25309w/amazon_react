@@ -1,12 +1,13 @@
 import React, { useEffect, useState } from 'react';
 import { Link } from "react-router-dom"
 import { useSelector, useDispatch } from 'react-redux';
-import { saveProduct, listProducts } from '../actions/productActions';
+import { saveProduct, listProducts, deleteProduct } from '../actions/productActions';
 
 
 
 function ProductsScreen(props){
-
+    const [modalVisible, setModalVisible] = useState(false);
+    const [id, setId] = useState('');
     const [name, setName] = useState('');
     const [price, setPrice] = useState('');
     const [image, setImage] = useState('');
@@ -16,32 +17,55 @@ function ProductsScreen(props){
     const [description, setDescription] = useState('');
     const productSave = useSelector(state => state.productSave);
     const { loading: loadingSave, success: successSave, error: errorSave } = productSave;
+    const productDelete = useSelector(state => state.productDelete);
+    const { loading: loadingDelete, success: successDelete, error: errorDelete } = productDelete;
     const productList = useSelector(state => state.productList);
     const {loading, products, error} = productList;
     const dispatch = useDispatch();
     // const redirect = props.location.search ? props.location.search.split('=')[1]: '/';
 
     useEffect(() => {
+        if(successSave){
+            setModalVisible(false);
+        } 
         dispatch(listProducts())
         return () => {
             //
         };
-    }, []); 
+    }, [successSave, successDelete]); 
+
+    const openModel = (product) => {
+        setModalVisible(true)
+        setId(product._id);
+        setName(product.name);
+        setImage(product.image);
+        setPrice(product.price);
+        setBrand(product.brand);
+        setCategory(product.category);
+        setCountInStock(product.countInStock);
+        setDescription(product.description);
+    }
 
     const submitHandler = (e) => {
         e.preventDefault();  
         dispatch(saveProduct({
+            _id: id,
             name, price, image, brand, category, 
             countInStock, description
         })); 
+    }
+
+    const deleteHandler = (product) => {
+        dispatch(deleteProduct(product._id))
     }
         console.log('ProductsScreen')
         return <div className="content content-margined">
             
             <div className="product-header">
                 <h3>Products</h3>
-                <button>Create Product</button>
+                <button className ="button primary" onClick={() => openModel({})}>Create Product</button>
             </div>
+            {modalVisible && 
             
             <div className="form">
                 <form onSubmit = {submitHandler}>
@@ -57,60 +81,62 @@ function ProductsScreen(props){
                             <label htmlFor="name">
                                 Name
                             </label>
-                            <input type="text" name="name" id="name" onChange={ (e) => setName(e.target.value)}>
+                            <input type="text" name="name" value ={name} id="name" onChange={ (e) => setName(e.target.value)}>
                             </input>
                         </li>
                         <li>
                             <label htmlFor="price">
                                 Price
                             </label>
-                            <input type="text" name="price" id="price" onChange={ (e) => setPrice(e.target.value)}>
+                            <input type="text" name="price" value ={price} id="price" onChange={ (e) => setPrice(e.target.value)}>
                             </input>
                         </li>
                         <li>
                             <label htmlFor="name">
                                 Image
                             </label>
-                            <input type="text" name="image" id="image" onChange={ (e) => setImage(e.target.value)}>
+                            <input type="text" name="image" value ={image} id="image" onChange={ (e) => setImage(e.target.value)}>
                             </input>
                         </li>
                         <li>
                             <label htmlFor="brand">
                                 Brand
                             </label>
-                            <input type="text" name="name" id="name" onChange={ (e) => setBrand(e.target.value)}>
+                            <input type="text" name="name" value ={brand} id="name" onChange={ (e) => setBrand(e.target.value)}>
                             </input>
                         </li>
                         <li>
                             <label htmlFor="category">
                                 Category
                             </label>
-                            <input type="text" name="name" id="name" onChange={ (e) => setCategory(e.target.value)}>
+                            <input type="text" name="name" value ={category} id="name" onChange={ (e) => setCategory(e.target.value)}>
                             </input>
                         </li>
                         <li>
                             <label htmlFor="countInStock">
                                 CountInStock
                             </label>
-                            <input type="text" name="countInStock" id="countInStock" onChange={ (e) => setCountInStock(e.target.value)}>
+                            <input type="text" name="countInStock" value ={countInStock} id="countInStock" onChange={ (e) => setCountInStock(e.target.value)}>
                             </input>
                         </li>
                         <li>
                             <label htmlFor="description">
                                 Description
                             </label>
-                            <textarea type="text" name="description" id="description" onChange={ (e) => setDescription(e.target.value)}>
+                            <textarea type="text" name="description" value ={description} id="description" onChange={ (e) => setDescription(e.target.value)}>
                             </textarea>
                         </li> 
                         <li>
-                            <button type="submit" className="button primary">Create</button>
+                            <button type="submit" className="button primary">{id?"Update": "Create"}</button>
+                            <button type="back" className="button secondary" onClick={() => setModalVisible(false)}>Back</button>
                         </li>
                     </ul>
                 </form> 
             </div>
+            }
 
             <div className= "product-list">
-                <table>
+                <table className="table">
                     <thead>
                         <tr>
                             <th>ID</th>
@@ -128,8 +154,9 @@ function ProductsScreen(props){
                                     <td>{product.category}</td>
                                     <td>{product.brand}</td>
                                     <td>
-                                        <button>Edit</button>
-                                        <butto>Delete</butto>
+                                        <button className ="button" onClick = {()=> openModel(product)}>Edit</button>
+                                        {' '}
+                                        <button className ="button" onClick = {()=> deleteHandler(product)}>Delete</button>
                                     </td>
                                 </tr>))}
                     </tbody>

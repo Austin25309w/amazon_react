@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { Link } from "react-router-dom"
 import { useSelector, useDispatch } from 'react-redux';
-import { detailsProduct } from '../actions/productActions'
+import { detailsProduct, saveProduct, deleteProduct } from '../actions/productActions'
 
 
 function ProductScreen (props){
@@ -19,6 +19,7 @@ function ProductScreen (props){
             //
         };
     }, []);
+
     const handleAddToCart = () => {
         props.history.push("/cart/" +  props.match.params.id + "?qty=" + qty)
     }
