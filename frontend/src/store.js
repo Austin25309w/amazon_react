@@ -9,7 +9,7 @@ import { userSigninReducer, userRegisterReducer } from './reducers/userReducers'
 const cartItems = Cookie.getJSON("cartItems") || [];
 const userInfo = Cookie.getJSON('userInfo') || null;
 // keep cartItems in a cart 
-const initialState = { cart: { cartItems }, userSignin: {userInfo} };
+const initialState = { cart: { cartItems, shipping: {}, payment: {} }, userSignin: {userInfo} };
 // combine reducers in store hold all reducers (reducers handle logics)
 const reducer = combineReducers({
     // reducer is a function get state and action, 
