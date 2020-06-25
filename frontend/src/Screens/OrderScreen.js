@@ -1,48 +1,26 @@
 import React, { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
-import { createOrder } from '../actions/orderActions';
+import { createOrder, detailsOrder } from '../actions/orderActions';
 import CheckoutSteps from '../components/CheckoutSteps';
 
 
 
-function PlaceOrderScreen(props){
-    const cart = useSelector(state => state.cart);
-    const orderCreate = useSelector(state => state.orderCreate);
-    const { loading, success, order } = orderCreate;
-
-    const { cartItems, shipping, payment} = cart;
-    if(!shipping.address){
-        props.history.push("/shipping");
-    } else if(!payment.paymentMethod){
-        props.location.push("/payment");
-    };
-
-    const itemsPrice = cartItems.reduce((a, c) => a + c.price * c.qty, 0 );
-    const shippingPrice = itemsPrice > 100 ? 0 : 10;
-    const taxPrice = 0.15 * itemsPrice;
-    const totalPrice = itemsPrice + shippingPrice + taxPrice;
-
+function OrderScreen(props){
     const dispatch = useDispatch();
-
-    const placeOrderHandler = () => {
-        // create an order 
-        dispatch(createOrder({
-         orderItems: cartItems, shipping, payment, itemsPrice, shippingPrice,
-            taxPrice, totalPrice
-        }));
-    }
-
-    useEffect(()=> {
-        if(success){
-            props.history.push("/order/" + order._id)
+    useEffect(() => {
+        dispatch(detailsOrder(props.match.params.id));
+        return () => {
         }
-    },[success])
+    }, [])
 
+    const orderDetails = useSelector(state => state.orderDetails);
+    const { loading, order, error } = orderDetails;
+    const payHandler = () => {};
  
-
-    return <div>
-        <CheckoutSteps step1 step2 step3 step4></CheckoutSteps>
+    return loading ? <div>Loading ... </div> : error ? <div>{error}</div> :
+    <div>
+        
     <div className ="placeorder">
         <div className ="placeorder-info">
             <div>
@@ -50,14 +28,20 @@ function PlaceOrderScreen(props){
                     Shipping
                 </h3>
                 <div>
-                    {cart.shipping.address}, {cart.shipping.city},
-                    {cart.shipping.postalCode}, {cart.shipping.country},
+                    {order.shipping.address}, {order.shipping.city},
+                    {order.shipping.postalCode}, {order.shipping.country},
+            </div>
+            <div>
+                {order.isDelivered ? "Delivered at " + order.deliveredAt: "Not Delivered."}
             </div>
         </div>
         <div>
             <h3>Payment</h3>
             <div>
-                Payment Method: {cart.payment.paymentMethod}
+                Payment Method: {order.payment.paymentMethod}
+            </div>
+            <div>
+                {order.isDelivered ? "Paid at " + order.paidAt : "Not Paid"}
             </div>
         </div>
 
@@ -72,12 +56,12 @@ function PlaceOrderScreen(props){
                     </div>
                     </li>
                     {
-                        cartItems.length === 0 ?
+                        order.orderItems.length ?
                         <div>
                         Cart is empty
                     </div>
                     :
-                    cartItems.map(item =>
+                    order.orderItems.map(item =>
                         <li>
                             <div className="cart-image">
                                 <img src={item.image} alt="product"/>
@@ -106,26 +90,26 @@ function PlaceOrderScreen(props){
         <div className="placeorder-action">
             <ul className="placeorderlist">
                 <li>
-                    <button className="button primary full-width" onClick={placeOrderHandler}>Place Order</button>
+                    <button className="button primary full-width" onClick={payHandler}>Pay Now</button>
                 </li>
                 <li>
                     <h3>Order Summary</h3>
                 </li>
                 <li>
                     <div>Items</div>
-                    <div>${itemsPrice}</div>
+                    <div>${order.itemsPrice}</div>
                 </li>
                 <li>
                     <div>Shipping</div>
-                    <div>${shippingPrice}</div>
+                    <div>${order.shippingPrice}</div>
                 </li>
                 <li>
                     <div>Tax</div>
-                    <div>${taxPrice}</div>
+                    <div>${order.taxPrice}</div>
                 </li>
                 <li>
                     <div>Order Total</div>
-                    <div>${totalPrice}</div>
+                    <div>${order.totalPrice}</div>
                 </li>
             </ul>
         </div>
@@ -135,4 +119,4 @@ function PlaceOrderScreen(props){
     
     }
 
-export default PlaceOrderScreen;
+export default OrderScreen;

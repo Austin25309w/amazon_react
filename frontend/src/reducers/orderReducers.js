@@ -1,6 +1,7 @@
-const { ORDER_CREATE_REQUEST, ORDER_CREATE_FAIL, ORDER_CREATE_SUCCESS } = require("../constants/orderConstants");
+const { ORDER_CREATE_REQUEST, ORDER_CREATE_FAIL, ORDER_CREATE_SUCCESS, 
+    ORDER_DETAILS_REQUEST, ORDER_DETAILS_SUCCESS, ORDER_DETAILS_FAIL } = require("../constants/orderConstants");
 
-function OrderCreateReducer(state = {}, action){
+function orderCreateReducer(state = {}, action){
     switch (action.type) {
         case ORDER_CREATE_REQUEST:
             return { loading: true };
@@ -12,4 +13,26 @@ function OrderCreateReducer(state = {}, action){
     }
 }
 
-export { OrderCreateReducer }
+function orderDetailsReducer(state = {
+    order:{
+        orderItems:[],
+        shipping: {},
+        payment: {}
+    }
+}, action){
+    switch (action.type) {
+        case ORDER_DETAILS_REQUEST:
+            return { loading: true };
+        case ORDER_DETAILS_SUCCESS:
+            return { loading: false, order: action.payload };
+        case ORDER_DETAILS_FAIL:
+            return { loading: false, error: action.payload };
+        default: return state;
+    }
+}
+
+
+
+
+
+export { orderCreateReducer, orderDetailsReducer }
