@@ -4,6 +4,7 @@ import Cookie from "js-cookie";
 import { productListReducer, productDetailsReducer, productSaveReducer, productDeleteReducer } from './reducers/productReducers';
 import { cartReducer } from './reducers/cartReducers';
 import { userSigninReducer, userRegisterReducer } from './reducers/userReducers';
+import { OrderCreateReducer } from './reducers/orderReducers';
 //store accepts 3 parameters 
 
 const cartItems = Cookie.getJSON("cartItems") || [];
@@ -22,6 +23,7 @@ const reducer = combineReducers({
     userRegister: userRegisterReducer,
     productSave: productSaveReducer,
     productDelete: productDeleteReducer,
+    OrderCreate: OrderCreateReducer,
 })
 const composeEnhancer = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
 //compose applyMiddleware is for async action

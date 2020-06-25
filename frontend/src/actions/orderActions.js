@@ -1,6 +1,7 @@
 import axios from 'axios';
+import { ORDER_CREATE_REQUEST, ORDER_CREATE_SUCCESS, ORDER_CREATE_FAIL } from '../constants/orderConstants';
 
-const createOrder = (order) => async (dspatch, getState) => {
+const createOrder = (order) => async (dispatch, getState) => {
     try {
         dispatch({type: ORDER_CREATE_REQUEST, payload: order});
         const {userSignin: { userInfo }} = getState();

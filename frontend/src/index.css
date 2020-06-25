@@ -375,7 +375,7 @@ tbody>tr:nth-child(even){
 
 .checkout-steps > div.active{
   border-top: 0.3rem #f08000 solid;
-  color: #c0d0c0;
+  color: #f08000;
 }
 
 /* pleace order */

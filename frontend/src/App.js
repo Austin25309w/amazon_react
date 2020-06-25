@@ -1,11 +1,11 @@
 import React from 'react';
 import { BrowserRouter, Route, Link } from 'react-router-dom';
+import { useSelector } from 'react-redux';
 import HomeScreen from './screens/HomeScreen';
 import ProductScreen from './screens/ProductScreen';
 import CartScreen from './screens/CartScreen';
 import SigninScreen from './screens/SigninScreen';
 import RegisterScreen from './screens/RegisterScreen';
-import { useSelector } from 'react-redux';
 import ProductsScreen from './screens/ProductsScreen';
 import ShippingScreen from './screens/ShippingScreen';
 import PaymentScreen from './screens/PaymentScreen';
@@ -57,6 +57,7 @@ function App() {
               <main className="main">
                   <div className="content">
                     <Route path="/signin" component={SigninScreen}/> 
+                    {/* <Route path="/order/:id" component={OrderScreen}/> */}
                     <Route path="/payment" component={PaymentScreen}/> 
                     <Route path="/products" component={ProductsScreen}/>
                     <Route path="/shipping" component={ShippingScreen}/>
