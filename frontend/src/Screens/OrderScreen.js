@@ -1,18 +1,24 @@
 import React, { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
-import { createOrder, detailsOrder } from '../actions/orderActions';
+import { createOrder, detailsOrder, payOrder } from '../actions/orderActions';
 import CheckoutSteps from '../components/CheckoutSteps';
-
+import PaypalButton from '../components/PaypalButton'
 
 
 function OrderScreen(props){
+    const orderPay = useSelector(state => state.orderPay);
+    const {loading: loadingPay, success: successPay, error: errorPay } = orderPay;
     const dispatch = useDispatch();
     useEffect(() => {
         dispatch(detailsOrder(props.match.params.id));
         return () => {
         }
-    }, [])
+    }, []);
+
+    const handleSuccessPayment = (paymentResult) => {
+        dispatch(payOrder(order, paymentResult));
+    }
 
     const orderDetails = useSelector(state => state.orderDetails);
     const { loading, order, error } = orderDetails;
@@ -62,7 +68,7 @@ function OrderScreen(props){
                     </div>
                     :
                     order.orderItems.map(item =>
-                        <li>
+                        <li key={item._id}>
                             <div className="cart-image">
                                 <img src={item.image} alt="product"/>
                             </div>
@@ -89,8 +95,13 @@ function OrderScreen(props){
 
         <div className="placeorder-action">
             <ul className="placeorderlist">
-                <li>
-                    <button className="button primary full-width" onClick={payHandler}>Pay Now</button>
+                <li className ="placeorder-actions-payment">
+                    {/* <button className="button primary full-width" onClick={payHandler}>Pay Now</button> */}
+                    {!order.isPaid && 
+                    <PaypalButton 
+                    amount = {order.totalPrice} 
+                    onSuccess={handleSuccessPayment} />
+                    }
                 </li>
                 <li>
                     <h3>Order Summary</h3>

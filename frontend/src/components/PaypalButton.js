@@ -1,9 +1,10 @@
-import { useEffect } from "react";
-import Axios from "axios";
+import { useEffect, useState } from "react";
+import ReactDOM from 'react-dom';
 import React from 'react';
 import axios from 'axios'
 
 function  PaypalButton(props){
+    const [sdkReady, setSdkReady] = useState(false);
     const addPaypalSdk = async () => {
         const result = await axios.get("/api/config/paypal");
         const clientID = result.data;
@@ -14,13 +15,44 @@ function  PaypalButton(props){
         script.onload = () => {
             setSdkReady(true);
         }
+        document.body.appendChild(script);
     }
+    const createOrder = (data, actions) => 
+        actions.order.create({
+            purchase_units:[
+                {
+                    amount: 'USD',
+                    value: props.amount
+                }
+            ]
+        });
+
+    const onApprove = (data, actions) => actions.order
+        .capture()
+        .then(details => props.onSUccess(data, details))
+        .catch(err => console.log(err));
+
+
     //load paypal script
     useEffect(() => {
         if(!window.paypal){
             addPaypalSdk();
         }
-    })
+        return () => {
+            
+        }
+    },[]);
+
+    if(!sdkReady){
+        return <div>Loading... </div>
+    }
+
+    const Button = window.paypal.Buttons.driver('react', {React, ReactDOM});
+    return <Button {...props} createOrder = {(data, actions) => 
+                                                createOrder(data,actions)}
+                                                onApprove = {(data, actions) => 
+                                                    onApprove(data, actions)} 
+                                                    />
 }
 
 export default PaypalButton;

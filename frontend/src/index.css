@@ -428,3 +428,6 @@ tbody>tr:nth-child(even){
   margin-top: 0;
 }
 
+.placeorder-actions-payment > div {
+  width: 100%;
+}

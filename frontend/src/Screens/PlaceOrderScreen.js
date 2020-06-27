@@ -20,7 +20,8 @@ function PlaceOrderScreen(props){
 
     const itemsPrice = cartItems.reduce((a, c) => a + c.price * c.qty, 0 );
     const shippingPrice = itemsPrice > 100 ? 0 : 10;
-    const taxPrice = 0.15 * itemsPrice;
+    const tax = 0.15 * itemsPrice
+    const taxPrice = tax.toFixed(2);
     const totalPrice = itemsPrice + shippingPrice + taxPrice;
 
     const dispatch = useDispatch();
