@@ -13,12 +13,12 @@ function OrderScreen(props){
     const dispatch = useDispatch();
     useEffect(() => {
         if(successPay){
-            props.history.push(';profile')
+            props.history.push('/profile')
         } else {
         dispatch(detailsOrder(props.match.params.id));
         }
         return () => {
-        }
+        };
     }, [successPay]);
 
     const handleSuccessPayment = (paymentResult) => {
@@ -27,7 +27,6 @@ function OrderScreen(props){
 
     const orderDetails = useSelector(state => state.orderDetails);
     const { loading, order, error } = orderDetails;
-    const payHandler = () => {};
  
     return loading ? <div>Loading ... </div> : error ? <div>{error}</div> :
     <div>
@@ -104,8 +103,9 @@ function OrderScreen(props){
                     {/* <button className="button primary full-width" onClick={payHandler}>Pay Now</button> */}
                     {!order.isPaid && 
                     <PaypalButton 
-                    amount = {order.totalPrice} 
-                    onSuccess={handleSuccessPayment} />
+                        amount = {order.totalPrice} 
+                        onSuccess={handleSuccessPayment} 
+                        />
                     }
                 </li>
                 <li>

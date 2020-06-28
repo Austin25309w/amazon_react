@@ -15,7 +15,7 @@ function PlaceOrderScreen(props){
     if(!shipping.address){
         props.history.push("/shipping");
     } else if(!payment.paymentMethod){
-        props.location.push("/payment");
+        props.history.push("/payment");
     };
 
     const itemsPrice = cartItems.reduce((a, c) => a + c.price * c.qty, 0 );
@@ -105,7 +105,7 @@ function PlaceOrderScreen(props){
     </div>
 
         <div className="placeorder-action">
-            <ul className="placeorderlist">
+            <ul>
                 <li>
                     <button className="button primary full-width" onClick={placeOrderHandler}>Place Order</button>
                 </li>
