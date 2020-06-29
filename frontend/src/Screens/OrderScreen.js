@@ -18,6 +18,7 @@ function OrderScreen(props){
         dispatch(detailsOrder(props.match.params.id));
         }
         return () => {
+            
         };
     }, [successPay]);
 
@@ -33,7 +34,7 @@ function OrderScreen(props){
         
     <div className ="placeorder">
         <div className ="placeorder-info">
-            <div>
+            <div> 
                 <h3>
                     Shipping
                 </h3>

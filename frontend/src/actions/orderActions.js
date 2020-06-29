@@ -41,7 +41,7 @@ import {
         try {
             dispatch({ type: ORDER_PAY_REQUEST, payload: paymentResult});
             const {userSignin: { userInfo }} = getState();
-            const { data } = await axios.put('/api/orders/' + order._id + "/pay", paymentResult, {
+            const { data } = await axios.put("/api/orders/" + order._id + "/pay", paymentResult, {
                 headers:
                 { Authorization: 'Bearer ' + userInfo.token}
             });

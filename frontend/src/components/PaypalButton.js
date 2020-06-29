@@ -10,26 +10,29 @@ function  PaypalButton(props){
         const clientID = result.data;
         const script = document.createElement('script');
         script.type = 'text/javascript';
-        script.src = 'https://www.paypal.com/sdk/js?client-Id=' + clientID;
+        script.src = 'https://www.paypal.com/sdk/js?client-id=' + clientID;
         script.async = true;
         script.onload = () => {
             setSdkReady(true);
         }
         document.body.appendChild(script);
     }
+
     const createOrder = (data, actions) => 
         actions.order.create({
             purchase_units:[
                 {
-                    amount: 'USD',
-                    value: props.amount
+                    amount: {
+                        currency_code: 'USD',
+                        value: props.amount
+                    }
                 }
             ]
         });
 
     const onApprove = (data, actions) => actions.order
         .capture()
-        .then(details => props.onSUccess(data, details))
+        .then(details => props.onSuccess(data, details))
         .catch(err => console.log(err));
 
 
