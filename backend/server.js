@@ -25,6 +25,7 @@ app.use("/api/users", userRoute);
 app.use("/api/products", productRoute);
 app.use("/api/orders", orderRoute);
 app.get("/api/config/paypal", (req,res) => {
+    console.log('paypal route in server')
     res.send(config.PAYPAL_CLIENT_ID);
 })
 // app.get("/api/products", (req, res) => {

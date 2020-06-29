@@ -31,6 +31,7 @@ router.post('/', isAuth, async (req, res) => {
 
 
 router.put(':id/pay', isAuth, async (req, res) => {
+    console.log('order PAID route')
     const order = await Order.findById(req.params.id);
     if(order){
         order.isPaid = true;
