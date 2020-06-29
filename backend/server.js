@@ -44,3 +44,8 @@ app.get("/api/config/paypal", (req,res) => {
 
 
 app.listen(5000, () => { console.log("Server started at http://localhost:5000") });
+
+
+
+// xhr.js:178 PUT http://localhost:3000/api/orders/5efa42d1237a0e5766771b8e/pay 404 (Not Found)
+// Cannot PUT /api/orders/5efa42d1237a0e5766771b8e/pay
