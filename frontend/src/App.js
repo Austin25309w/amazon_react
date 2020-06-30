@@ -11,6 +11,7 @@ import ShippingScreen from './screens/ShippingScreen';
 import PaymentScreen from './screens/PaymentScreen';
 import PlaceOrderScreen from './screens/PlaceOrderScreen';
 import OrderScreen from './screens/OrderScreen';
+import OrdersScreen from './screens/OrdersScreen';
 
 function App() {
     const userSignin = useSelector(state => state.userSignin);
@@ -36,11 +37,21 @@ function App() {
                 <div className="header-links">
                     <a href="cart.html">Cart</a>
                     {
-                        userInfo && <Link to="/profile">{userInfo.name}</Link>
+                        userInfo ? <Link to="/profile">{userInfo.name}</Link> :
+                            <Link to ="/signin">Sign In</Link>  
                     }
-                    <Link to ="/signin">Sign In</Link>
-                    <Link to ="/register">Register</Link>
-                </div>
+                    {userInfo && userInfo.isAdmin && (
+                        <div className="dropdown">
+                            <a href="#">Admin</a>
+                            <ul className="dropdown-content">
+                                <li>
+                                    <Link to ="/orders">Orders</Link>
+                                    <Link to="/products">Products</Link>
+                                </li>
+                            </ul>
+                        </div>
+                        )}
+                    </div>
             </header>
             <aside className="sidebar"> 
                 <h3>Shopping Categories</h3>
@@ -57,6 +68,7 @@ function App() {
 
               <main className="main">
                   <div className="content">
+                    <Route path="/orders" component={OrdersScreen}/>
                     <Route path="/signin" component={SigninScreen}/> 
                     <Route path="/order/:id" component={OrderScreen}/>
                     <Route path="/payment" component={PaymentScreen}/> 
