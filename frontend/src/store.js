@@ -3,7 +3,7 @@ import thunk from 'redux-thunk';
 import Cookie from "js-cookie";
 import { productListReducer, productDetailsReducer, productSaveReducer, productDeleteReducer } from './reducers/productReducers';
 import { cartReducer } from './reducers/cartReducers';
-import { userSigninReducer, userRegisterReducer } from './reducers/userReducers';
+import { userSigninReducer, userRegisterReducer, userUpdateReducer } from './reducers/userReducers';
 import { orderCreateReducer, orderDetailsReducer, orderPayReducer, myOrderListReducer, orderListReducer, orderDeleteReducer } from './reducers/orderReducers';
 //store accepts 3 parameters 
 
@@ -28,7 +28,9 @@ const reducer = combineReducers({
     orderPay: orderPayReducer,
     myOrderList: myOrderListReducer,
     orderList: orderListReducer,
-    orderDelete: orderDeleteReducer
+    orderDelete: orderDeleteReducer,
+    userUpdate: userUpdateReducer
+
 })
 const composeEnhancer = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
 //compose applyMiddleware is for async action
