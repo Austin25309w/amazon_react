@@ -7,12 +7,13 @@ import axios from "axios";
 
 // dispatch has a type and payload
 // for product list
-const listProducts = () => async (dispatch) => {
+const listProducts = (category = '', searchKeyword = '', sortOrder='' ) => async (dispatch) => {
 try {
 
     dispatch ({ type: PRODUCT_LIST_REQUEST});
     // axios get data from server
-    const { data } = await axios.get("/api/products");
+    const { data } = await axios.get("/api/products?category=" 
+    + category + "&searchKeyword=" + searchKeyword + "&sortOrder=" + sortOrder);
     //dispatch return data from server
     dispatch({ type: PRODUCT_LIST_SUCCESS, payload: data })
 }

@@ -57,12 +57,12 @@ function App() {
             <aside className="sidebar"> 
                 <h3>Shopping Categories</h3>
                 <button className="sidebar-close-button" onClick={closeMenu}>X</button>
-                <ul>
+                <ul className="categories">
                     <li>
-                        <a href="Charger.html">Charger</a>
+                        <Link to="/category/Charger">Charger</Link>
                     </li>
                     <li>
-                        <a href="Powerbank.html">Powerbank</a>
+                        <Link to="/category/Powerbank">Powerbank</Link>
                     </li>
                 </ul>
             </aside>
@@ -80,6 +80,7 @@ function App() {
                     <Route path="/register" component={RegisterScreen}/>
                     <Route path="/product/:id" component={ProductScreen}/>
                     <Route path="/cart/:id?" component={CartScreen}/>
+                    <Route path="/category:id" component={HomeScreen}/>
                     <Route path="/" exact ={true} component={HomeScreen}/>
                     </div>
                 </main>

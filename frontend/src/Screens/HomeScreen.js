@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
 import { listProducts } from '../actions/productActions';
-import e from 'express';
+
 
 
 const HomeScreen = (props) => {
@@ -21,13 +21,11 @@ const HomeScreen = (props) => {
         //     setProduct(data);
         // }
         // fetchData();
-        dispatch(listProducts());
-
-
+        dispatch(listProducts(category));
         return () => {
             // 
         };
-    },[])
+    },[category])
 
     const submitHandler = (e) => {
       e.preventDefault();
@@ -39,7 +37,7 @@ const HomeScreen = (props) => {
       dispatch(listProducts(category, searchKeyword, sortOrder))
     }
     // if not longing, return error messa. if loading, return products
-    return (<>
+    return <>
       {category && 
       <h2>{category}</h2>}
 
@@ -58,9 +56,9 @@ const HomeScreen = (props) => {
             <option value="highest">Highest</option>
           </select>
         </li>
-
       </ul>
-      {loading? <div>Loading...</div> :
+
+      { loading ? <div>Loading...</div> :
         error ? <div>{error}</div> :
         <ul className="products">
             {
@@ -76,11 +74,9 @@ const HomeScreen = (props) => {
               <div className="product-rating">{product.rating} Stars ({product.numReview })</div>
                 </div>
               </li>)
-            }
-            </ul>
-            }
-    </>
-    
-
-    )
+              }
+          </ul>
+          }
+        </>
+      }
 export default HomeScreen;
