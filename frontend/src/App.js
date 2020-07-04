@@ -47,7 +47,7 @@ function App() {
                             <ul className="dropdown-content">
                                 <li>
                                     <Link to ="/orders">Orders</Link>
-                                    <Link to="/products">Products</Link>
+                                    <Link to ="/products">Products</Link>
                                 </li>
                             </ul>
                         </div>
@@ -59,10 +59,10 @@ function App() {
                 <button className="sidebar-close-button" onClick={closeMenu}>X</button>
                 <ul className="categories">
                     <li>
-                        <Link to="/category/Charger">Charger</Link>
+                        <Link to="/category/charger">Charger</Link>
                     </li>
                     <li>
-                        <Link to="/category/Powerbank">Powerbank</Link>
+                        <Link to="/category/powerbank">Powerbank</Link>
                     </li>
                 </ul>
             </aside>
@@ -80,7 +80,7 @@ function App() {
                     <Route path="/register" component={RegisterScreen}/>
                     <Route path="/product/:id" component={ProductScreen}/>
                     <Route path="/cart/:id?" component={CartScreen}/>
-                    <Route path="/category:id" component={HomeScreen}/>
+                    <Route path="/category/:id" component={HomeScreen}/>
                     <Route path="/" exact ={true} component={HomeScreen}/>
                     </div>
                 </main>

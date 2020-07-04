@@ -16,11 +16,7 @@ const HomeScreen = (props) => {
 
     useEffect(() =>{
         //fectch data from server, data containst real data.
-        // const fetchData = async ()=> {
-        //     const {data} = await axios.get("/api/products");
-        //     setProduct(data);
-        // }
-        // fetchData();
+
         dispatch(listProducts(category));
         return () => {
             // 
@@ -29,7 +25,7 @@ const HomeScreen = (props) => {
 
     const submitHandler = (e) => {
       e.preventDefault();
-      dispatch(listProducts(category, setSearchKeyword, sortOrder))
+      dispatch(listProducts(category, searchKeyword, sortOrder))
     }
 
     const sortHandler = (e) => {
@@ -51,7 +47,7 @@ const HomeScreen = (props) => {
         <li>
           Sort By{' '}
           <select name="sortOrder" onChange={sortHandler}>
-            <option value="newest">Newest</option>
+            <option value="">Newest</option>
             <option value="lowest">Lowest</option>
             <option value="highest">Highest</option>
           </select>
@@ -63,15 +59,18 @@ const HomeScreen = (props) => {
         <ul className="products">
             {
               products.map(product => 
+                
               <li key ={product._id}>
-                <div className="product">
-                  
-                      <div className="product-name">
-                          <Link to={ '/product/' + product._id}><img className="product-image" src ={product.image} alt ="product"/></Link>
+                      <div className="product">
+                          <Link to={ '/product/' + product._id}>
+                            <img className="product-image" src ={product.image} alt ="product"/></Link>
+                            {console.log(product)}
+                      <div className = "product-name">
+                          <Link to={'/product/' + product._id}>{product.name}</Link>
                       </div>
                       <div className="product-brand">{product.brand}</div>
                       <div className="product-price">{product.price}</div>
-              <div className="product-rating">{product.rating} Stars ({product.numReview })</div>
+                      <div className="product-rating">{product.rating} Stars ({product.numReviews })</div>
                 </div>
               </li>)
               }
